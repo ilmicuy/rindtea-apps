@@ -245,6 +245,11 @@ body {
   cursor: pointer;
 }
 
+.form-container .checkout-button.disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
 /* Hero */
 .hero {
   min-height: 100vh;
@@ -411,6 +416,7 @@ body {
   text-align: center;
   border: 1px solid #eee;
   padding: 2rem;
+  max-width: 100vh;
 }
 
 .products .product-icons {

@@ -82,6 +82,63 @@ document.addEventListener("alpine:init", () => {
   });
 });
 
+// Kirim data checkout
+checkoutButton.addEventListener("click", async (e) => {
+  e.preventDefault();
+  const formData = new FormData(form);
+  const data = new URLSearchParams(formData);
+  const objData = Object.fromEntries(data);
+  // const message = formatMessage(objData);
+  // window.open("http://wa.me/6281284164919?text=" + encodeURIComponent(message));
+
+  // fetch transaction
+  try {
+    const response = await fetch("php/placeOrder.php", {
+      method: "POST",
+      body: data,
+    });
+    const token = await response.text();
+    // console.log(token);
+    window.snap.pay(token, {
+      onSuccess: function (result) {
+        /* You may add your own implementation here */
+        alert("payment success!");
+        console.log(result);
+      },
+      onPending: function (result) {
+        /* You may add your own implementation here */
+        alert("wating your payment!");
+        console.log(result);
+      },
+      onError: function (result) {
+        /* You may add your own implementation here */
+        alert("payment failed!");
+        console.log(result);
+      },
+      onClose: function () {
+        /* You may add your own implementation here */
+        alert("you closed the popup without finishing the payment");
+      },
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+// Format pesan WA
+const formatMessage = (obj) => {
+  return `Data Pelanggan
+  Nama: ${obj.name}
+  Email: ${obj.email}
+  No. HP: ${obj.phone}
+  Data Pesanan
+  ${JSON.parse(obj.items).map(
+    (item) => `${item.name} (${item.quantity} x ${rupiah(item.total)}) \n`
+  )}
+  TOTAL: ${rupiah(obj.total)} 
+  Terima Kasih.`;
+};
+
 // Konversi Rupiah
 const rupiah = (number) => {
   return new Intl.NumberFormat("id-ID", {

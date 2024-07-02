@@ -61,3 +61,22 @@ window.onclick = (e) => {
     itemDetailModal.style.display = "none";
   }
 };
+
+// Form Validation
+const checkoutButton = document.querySelector(".checkout-button");
+const form = document.getElementById("checkoutForm");
+
+checkoutButton.disabled = true;
+form.addEventListener("keyup", (e) => {
+  for (let i = 0; i < form.elements.length; i++) {
+    if (form.elements[i].value.length !== 0) {
+      checkoutButton.classList.remove("disabled");
+      checkoutButton.classList.add("disabled");
+    } else {
+      return false;
+    }
+  }
+
+  checkoutButton.disabled = false;
+  checkoutButton.classList.remove("disabled");
+});

@@ -10,7 +10,14 @@
       defer
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
     ></script>
-    <script src="src/app.js"></script>
+
+    <script src="src/app.js" async></script>
+
+    <script
+      type="text/javascript"
+      src="https://app.sandbox.midtrans.com/snap/snap.js"
+      data-client-key="SB-Mid-client-IFp-kOve5HhWug09"
+    ></script>
   </head>
   <body>
     <!-- Navbar -->
@@ -19,6 +26,7 @@
       <div class="navbar-nav">
         <a href="#">Home</a>
         <a href="#about">Tentang Kami</a>
+        <a href="#menu">Menu</a>
         <a href="#products">Produk</a>
         <a href="#contact">Kontak</a>
       </div>
@@ -70,6 +78,12 @@
 
         <div class="form-container" x-show="$store.cart.items.length">
           <form action="" id="checkoutForm">
+            <input
+              type="hidden"
+              name="items"
+              x-model="JSON.stringify($store.cart.items)"
+            />
+            <input type="hidden" name="total" x-model="$store.cart.total" />
             <h5>Detail Pelanggan</h5>
             <label for="name">
               <span>Nama</span>
@@ -84,7 +98,7 @@
               <input type="phone" name="phone" id="phone" autocomplete="off" />
             </label>
             <button
-              class="checkout-button"
+              class="checkout-button disabled"
               type="submit"
               id="checkout-button"
               value="checkout"
@@ -174,7 +188,7 @@
 
     <!-- Product -->
     <section class="products" id="products" x-data="products">
-      <h2><span>Produk</span> Kami</h2>
+      <h2>Produk <span>Kami</span></h2>
       <p>
         Rind Tea menawarkan berbagai varian teh dari kulit buah yang unik dan
         kaya manfaat. Setiap produk terbuat dari kulit salak asli, memberikan
@@ -285,7 +299,7 @@
 
     <!-- Contact -->
     <section class="contact" id="contact">
-      <h2>Kontak <span>Kami</span></h2>
+      <h2><span>Kontak</span> Kami</h2>
       <p>
         Untuk informasi lebih lanjut atau pemesanan, hubungi kami di [email
         protected] atau melalui WhatsApp di +62 812-3456-7890. Kunjungi juga
@@ -306,11 +320,11 @@
           </div>
           <div class="input-group">
             <i data-feather="mail"></i>
-            <input type="text" placeholder="Email" />
+            <input type="email" placeholder="Email" />
           </div>
           <div class="input-group">
             <i data-feather="phone"></i>
-            <input type="text" placeholder="No Telepon" />
+            <input type="phone" placeholder="No Telepon" />
           </div>
           <button type="submit" class="btn">Kirim Pesan</button>
         </form>
